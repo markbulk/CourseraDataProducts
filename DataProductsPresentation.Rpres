@@ -1,0 +1,60 @@
+Data Products Pursuasive Presentation
+========================================================
+author: Mark Bulkeley
+date: 2016-06-06
+autosize: true
+
+Interactive Linear Regression
+========================================================
+
+Showing students how regression changes is important:
+
+- It's interactive - instant feedback
+- Reenforces ideas and concepts taught in classroom setting
+- Relevant interface: on the web where students are at home
+
+What dataset is used?
+========================================================
+
+- The `mtcars` dataset is used given students' familiarity with it.
+```{r, echo = FALSE}
+str(mtcars)
+```
+
+Plot Functionality is Impressive
+========================================================
+
+- The shiny app allows for simple plotting that depends on the inputs from the check boxes
+- Familiarity that you have with ggplot2 readily transfers to the web application!
+- The below shows the sample graph from the shiny application.
+
+```{r, echo=FALSE}
+library(ggplot2)
+myModel <- lm(mpg ~ ., data = mtcars)
+dt.plot <- data.frame(actual = mtcars$mpg, predicted = myModel$fitted.values)
+ggplot(data = dt.plot,
+       mapping = aes(x = predicted, y = actual)) +
+  geom_abline(slope = 1, lty = "dashed", col = "blue") +
+  geom_point(size = 6, col= "steelblue", alpha = 0.7) +
+  scale_x_continuous(name = "Predicted MPG Values") +
+  scale_y_continuous(name = "Actual MPG Values") +
+  geom_smooth() +
+  annotate("text", x = 20, y = 30, label = paste("Root Mean Square Error:",round(sqrt(sum((dt.plot$actual - dt.plot$predicted)^2)),4)))
+ 
+```
+
+Code can be Shared Across Applications
+========================================================
+- With proper planning and structuring, you can share important code between applications.
+  - Assume you had a special model that you'd apply to data in a similar way.
+  - Write that once and then reference from both of your shiny applications
+- Efficient and quick
+  - Turn _ad hoc_ analysis into web applications quickly and easily
+  - Allow management to tweak variables themselves so you don't sit in meetings endlessly changing input variables
+  - Capture key outputs simply for static reports
+  
+Summary
+===
+- Use interactive Shiny applications to teach the linear regression interactively!
+- See an example application here: <a href="https://markbulk.shinyapps.io/CourseraDataProducts_FinalProject/">Interactive Linear Regression</a>
+- The R code to build it can be found on <a href="https://github.com/markbulk/CourseraDataProducts">GitHub</a> (see the app.R file).
